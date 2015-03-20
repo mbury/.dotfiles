@@ -1,0 +1,25 @@
+[user]
+	name = Michał Bury
+	email = michal.bury@notoria.pl
+[core]
+	autocrlf = input
+	safecrlf = true
+	color = true
+[alias]
+    st = status -s
+    co = checkout
+    ci = commit
+    br = branch
+    pl = pull --rebase
+    f = fetch -p # Fetch from a repository and prune any remote-tracking references that no longer exist on the remote.
+    ec = config --global -e
+    up = "!f() { git fetch origin; git rebase origin/${1-master}; }; f"
+    undo = reset HEAD~1 --mixed
+    amend = commit --amend
+    bclean = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
+    unpushed = "!f() { git log --stat origin/${1-master}..HEAD; }; f"
+    hist = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    type = cat-file -t
+    dump = cat-file -p
+    finda = "!grepalias() { git config --global --get-regexp alias | grep -i \"$1\" | awk -v nr=2 '{sub(/^alias\\./,\"\")};{printf \"\\033[31m%10s\\033[1;37m\", $1};{sep=FS};{for (x=nr; x<=NF; x++) {printf \"%s%s\", sep, $x; }; print \"\\033[0;39m\"}'; }; grepalias"
+    rank = shortlog -sn --no-merges
